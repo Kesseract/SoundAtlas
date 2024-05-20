@@ -127,7 +127,7 @@ public class WordViewModel
             }
 
             File.WriteAllText(saveFileDialog.FileName, csvContent.ToString());
-            MessageBox.Show("CSVファイルのエクスポートが完了しました。", "エクスポート成功", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show("CSV Export successful", "Export successful", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }
