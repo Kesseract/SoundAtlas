@@ -130,6 +130,65 @@ public class WordViewModel
             MessageBox.Show("CSV Export successful", "Export successful", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
+
+    public void ImportCsv()
+    {
+        OpenFileDialog openFileDialog = new OpenFileDialog
+        {
+            Filter = "CSV file (*.csv)|*.csv"
+        };
+        if (openFileDialog.ShowDialog() == true)
+        {
+            try
+            {
+                var csvContent = File.ReadAllLines(openFileDialog.FileName);
+                var words = new List<WordItemViewModel>();
+
+                foreach (var line in csvContent.Skip(1)) // ヘッダー行をスキップ
+                {
+                    var columns = line.Split(',');
+                    if (columns.Length == 3)
+                    {
+                        words.Add(new WordItemViewModel
+                        {
+                            Name = columns[0],
+                            Abstract = columns[1],
+                            Detail = columns[2]
+                        });
+                    }
+                }
+
+                foreach (var word in words)
+                {
+                    if (!Words.Any(w => w.Name == word.Name && w.Abstract == word.Abstract && w.Detail == word.Detail))
+                    {
+                        var newWord = new WordModel
+                        {
+                            Name = word.Name,
+                            Abstract = word.Abstract,
+                            Detail = word.Detail
+                        };
+
+                        _databaseService.AddEntity(newWord);
+                        Words.Add(new WordItemViewModel
+                        {
+                            WordId = newWord.WordId,
+                            Name = newWord.Name,
+                            Abstract = newWord.Abstract,
+                            Detail = newWord.Detail,
+                            IsSelected = false
+                        });
+                    }
+                }
+
+                MessageBox.Show("CSVファイルのインポートが完了しました。", "インポート成功", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"CSVファイルのインポートに失敗しました: {ex.Message}", "インポート失敗", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+    }
 }
 public class WordItemViewModel
 {
