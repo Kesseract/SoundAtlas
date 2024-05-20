@@ -1,0 +1,19 @@
+﻿<Window x:Class="SoundAtlas.Views.MainWindowView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:SoundAtlas.Views"
+        Title="Main Window" Height="720" Width="1280">
+    <Grid>
+        <TabControl>
+            <TabItem Header="Virtual Instruments">
+                <local:VirtualInstrumentsView />
+            </TabItem>
+            <TabItem Header="Theories">
+                <local:TheoriesView />
+            </TabItem>
+            <TabItem Header="Words">
+                <local:WordsView />
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

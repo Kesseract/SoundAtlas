@@ -1,0 +1,15 @@
+﻿<Window x:Class="SoundAtlas.Views.WordCreateModalView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Add New Word" Height="350" Width="400"
+        ResizeMode="NoResize">
+    <StackPanel Margin="10">
+        <Label Content="Word:"/>
+        <TextBox x:Name="txtWord" Margin="0,5"/>
+        <Label Content="Abstract:"/>
+        <TextBox x:Name="txtAbstract" Margin="0,5" AcceptsReturn="True" Height="40"/>
+        <Label Content="Details:"/>
+        <TextBox x:Name="txtDetails" Margin="0,5" AcceptsReturn="True" Height="80"/>
+        <Button Content="Add" Margin="10" Width="100" HorizontalAlignment="Center" Click="Add_Click"/>
+    </StackPanel>
+</Window>
