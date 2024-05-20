@@ -110,7 +110,11 @@ namespace SoundAtlas.Views
 
         private void ExportCsvButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("CSVファイルのエクスポートが完了しました。", "エクスポート成功", MessageBoxButton.OK, MessageBoxImage.Information);
+            var viewModel = DataContext as WordViewModel;
+            if (viewModel != null)
+            {
+                viewModel.ExportCsv();
+            }
         }
 
         private void ImportCsvButton_Click(object sender, RoutedEventArgs e)

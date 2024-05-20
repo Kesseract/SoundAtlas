@@ -5,6 +5,9 @@ using SoundAtlas.Views;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Windows;
+using Microsoft.Win32;
+using System.Text;
+using System.IO;
 
 public class WordViewModel
 {
@@ -104,6 +107,28 @@ public class WordViewModel
         var wordUpdateViewModel = new WordUpdateViewModel(word.WordId);
         var wordUpdateModal = new WordUpdateModalView(wordUpdateViewModel);
         wordUpdateModal.ShowDialog();
+    }
+
+    public void ExportCsv()
+    {
+        SaveFileDialog saveFileDialog = new SaveFileDialog
+        {
+            Filter = "CSV file (*.csv)|*.csv",
+            FileName = "words_export.csv"
+        };
+        if (saveFileDialog.ShowDialog() == true)
+        {
+            StringBuilder csvContent = new StringBuilder();
+            csvContent.AppendLine("Name,Abstract,Detail");
+
+            foreach (var word in Words)
+            {
+                csvContent.AppendLine($"{word.Name},{word.Abstract},{word.Detail}");
+            }
+
+            File.WriteAllText(saveFileDialog.FileName, csvContent.ToString());
+            MessageBox.Show("CSVファイルのエクスポートが完了しました。", "エクスポート成功", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
     }
 }
 public class WordItemViewModel
