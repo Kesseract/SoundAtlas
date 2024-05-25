@@ -26,5 +26,11 @@ namespace SoundAtlas.Models
         [Column("rhythm_flg")]
         [Required]
         public bool RhythmFlg { get; set; }
+
+        [Column("abstract")]
+        public string? Abstract { get; set; }
+
+        [Column("detail")]
+        public string? Detail { get; set; }
     }
 }

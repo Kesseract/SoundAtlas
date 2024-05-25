@@ -7,7 +7,6 @@ public class MyMusicAppContext : DbContext
     public DbSet<InstrumentCategoryModel> InstrumentCategories { get; set; }
     public DbSet<InstrumentWordLinkageModel> InstrumentWordLinkages { get; set; }
     public DbSet<TheoryModel> Theories { get; set; }
-    public DbSet<TheoryDetailModel> TheoryDetails { get; set; }
     public DbSet<TheoryWordLinkageModel> TheoryWordLinkages { get; set; }
     public DbSet<VirtualInstrumentModel> VirtualInstruments { get; set; }
     public DbSet<VirtualInstrumentDetailModel> VirtualInstrumentDetails { get; set; }
@@ -18,6 +17,6 @@ public class MyMusicAppContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlite($"Data Source=..\\..\\..\\Database\\MyMusicApp.db");
+        optionsBuilder.UseSqlite(@"Data Source=C:\Users\hikar\cs\SoundAtlas\SoundAtlas\Database\MyMusicApp.db");
     }
 }
