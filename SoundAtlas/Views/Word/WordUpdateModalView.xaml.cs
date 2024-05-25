@@ -1,7 +1,7 @@
 ﻿using SoundAtlas.ViewModels.Word;
 using System.Windows;
 
-namespace SoundAtlas.Views
+namespace SoundAtlas.Views.Word
 {
     public partial class WordUpdateModalView : Window
     {

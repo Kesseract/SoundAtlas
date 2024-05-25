@@ -1,48 +1,48 @@
 ﻿using SoundAtlas.Models;
-using SoundAtlas.ViewModels.Word;
+using SoundAtlas.ViewModels.Theory;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace SoundAtlas.Views.Word
+namespace SoundAtlas.Views.Theory
 {
     /// <summary>
-    /// WordsView.xaml の相互作用ロジック
+    /// TheoriesView.xaml の相互作用ロジック
     /// </summary>
-    public partial class WordsView : UserControl
+    public partial class TheoriesView : UserControl
     {
-        public ObservableCollection<WordModel>? Words { get; private set; }
-        public WordsView()
+        public ObservableCollection<TheoryModel>? Theories { get; private set; }
+        public TheoriesView()
         {
             InitializeComponent();
-            var wordViewModel = new WordViewModel();
-            this.DataContext = wordViewModel;
+            var theoryViewModel = new TheoryViewModel();
+            this.DataContext = theoryViewModel;
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             // ここで単語追加用のモーダルウィンドウを開く
-            WordCreateModalView addModal = new WordCreateModalView();
+            TheoryCreateModalView addModal = new TheoryCreateModalView();
             var result = addModal.ShowDialog();
             if (result == true)
             {
-                var viewModel = DataContext as WordViewModel;
+                var viewModel = DataContext as TheoryViewModel;
                 if (viewModel != null)
                 {
-                    viewModel.LoadWords();  // viewModelを通してLoadWordsを呼び出す
+                    viewModel.LoadTheories();  // viewModelを通してLoadTheoriesを呼び出す
                 }
             }
         }
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
-            var viewModel = DataContext as WordViewModel;
+            var viewModel = DataContext as TheoryViewModel;
             if (viewModel != null)
             {
                 viewModel.SearchText = SearchTextBox.Text;
                 viewModel.SelectedSearchColumn = (SearchColumnComboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
-                viewModel.SearchWords();
+                viewModel.SearchTheories();
             }
         }
 
@@ -51,18 +51,18 @@ namespace SoundAtlas.Views.Word
             var textBlock = sender as TextBlock;
             if (textBlock != null && e.ChangedButton == MouseButton.Left)
             {
-                WordItemViewModel? selectedWord = textBlock.DataContext as WordItemViewModel;
-                if (selectedWord != null)
+                TheoryItemViewModel? selectedTheory = textBlock.DataContext as TheoryItemViewModel;
+                if (selectedTheory != null)
                 {
-                    var detailViewModel = new WordUpdateViewModel(selectedWord.WordId);
-                    var detailModal = new WordUpdateModalView(detailViewModel);
+                    var detailViewModel = new TheoryUpdateViewModel(selectedTheory.TheoryId);
+                    var detailModal = new TheoryUpdateModalView(detailViewModel);
                     var result = detailModal.ShowDialog();
                     if (result == true)
                     {
-                        var viewModel = DataContext as WordViewModel;
+                        var viewModel = DataContext as TheoryViewModel;
                         if (viewModel != null)
                         {
-                            viewModel.LoadWords();  // viewModelを通してLoadWordsを呼び出す
+                            viewModel.LoadTheories();  // viewModelを通してLoadWordsを呼び出す
                         }
                     }
                 }
@@ -71,23 +71,23 @@ namespace SoundAtlas.Views.Word
 
         private void DeleteSelected_Click(object sender, RoutedEventArgs e)
         {
-            var viewModel = DataContext as WordViewModel;
+            var viewModel = DataContext as TheoryViewModel;
             if (viewModel != null)
             {
-                var selectedItems = viewModel.Words.Where(w => w.IsSelected).ToList();
+                var selectedItems = viewModel.Theories.Where(w => w.IsSelected).ToList();
                 if (selectedItems.Any())
                 {
-                    var deleteViewModel = new WordDeleteViewModel(selectedItems);
-                    var deleteModal = new WordDeleteModalView { DataContext = deleteViewModel };
+                    var deleteViewModel = new TheoryDeleteViewModel(selectedItems);
+                    var deleteModal = new TheoryDeleteModalView { DataContext = deleteViewModel };
                     var result = deleteModal.ShowDialog();
                     if (result == true)
                     {
-                        viewModel.LoadWords();
+                        viewModel.LoadTheories();
                     }
                 }
                 else
                 {
-                    MessageBox.Show("No words selected for deletion.", "No Selection", MessageBoxButton.OK);
+                    MessageBox.Show("No Theories selected for deletion.", "No Selection", MessageBoxButton.OK);
                 }
             }
         }
@@ -97,7 +97,7 @@ namespace SoundAtlas.Views.Word
             var checkBox = sender as CheckBox;
             if (checkBox != null)
             {
-                var item = checkBox.DataContext as WordItemViewModel;
+                var item = checkBox.DataContext as TheoryItemViewModel;
                 if (item != null)
                 {
                     item.IsSelected = checkBox.IsChecked ?? false;
@@ -107,7 +107,7 @@ namespace SoundAtlas.Views.Word
 
         private void ExportCsvButton_Click(object sender, RoutedEventArgs e)
         {
-            var viewModel = DataContext as WordViewModel;
+            var viewModel = DataContext as TheoryViewModel;
             if (viewModel != null)
             {
                 viewModel.ExportCsv();
@@ -116,7 +116,7 @@ namespace SoundAtlas.Views.Word
 
         private void ImportCsvButton_Click(object sender, RoutedEventArgs e)
         {
-            var viewModel = DataContext as WordViewModel;
+            var viewModel = DataContext as TheoryViewModel;
             if (viewModel != null)
             {
                 viewModel.ImportCsv();

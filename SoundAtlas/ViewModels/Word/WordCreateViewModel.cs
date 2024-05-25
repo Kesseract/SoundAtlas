@@ -7,7 +7,7 @@ namespace SoundAtlas.ViewModels.Word
         private readonly DatabaseService _databaseService;
         public string? Word { get; set; }
         public string? Abstract { get; set; }
-        public string? Details { get; set; }
+        public string? Detail { get; set; }
 
         public WordCreateViewModel()
         {
@@ -20,7 +20,7 @@ namespace SoundAtlas.ViewModels.Word
             {
                 Name = Word ?? string.Empty,
                 Abstract = Abstract ?? string.Empty,
-                Detail = Details ?? string.Empty
+                Detail = Detail ?? string.Empty
             };
 
             _databaseService.AddEntity(word);

@@ -8,8 +8,8 @@
         <TextBox x:Name="txtWord" Margin="0,5"/>
         <Label Content="Abstract:"/>
         <TextBox x:Name="txtAbstract" Margin="0,5" AcceptsReturn="True" Height="40"/>
-        <Label Content="Details:"/>
-        <TextBox x:Name="txtDetails" Margin="0,5" AcceptsReturn="True" Height="80"/>
+        <Label Content="Detail:"/>
+        <TextBox x:Name="txtDetail" Margin="0,5" AcceptsReturn="True" Height="80"/>
         <Button Content="Add" Margin="10" Width="100" HorizontalAlignment="Center" Click="Add_Click"/>
     </StackPanel>
 </Window>

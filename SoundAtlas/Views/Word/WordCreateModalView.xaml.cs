@@ -19,7 +19,7 @@ namespace SoundAtlas.Views
             {
                 Word = txtWord.Text,
                 Abstract = txtAbstract.Text,
-                Details = txtDetails.Text
+                Detail = txtDetail.Text
             };
 
             viewModel.AddWord();

@@ -1,4 +1,4 @@
-﻿<Window x:Class="SoundAtlas.Views.Word.WordUpdateModalView"
+﻿<Window x:Class="SoundAtlas.Views.Theory.TheoryUpdateModalView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Word Details" Height="350" Width="400" ResizeMode="NoResize">
@@ -9,13 +9,13 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.RowSpan="2">
             <Label Content="Word:"/>
-            <TextBox Text="{Binding WordUpdate.Name}" FontWeight="Bold" Padding="5"/>
+            <TextBox Text="{Binding TheoryUpdate.Name}" FontWeight="Bold" Padding="5"/>
 
             <Label Content="Abstract:"/>
-            <TextBox Text="{Binding WordUpdate.Abstract}" Padding="5" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
+            <TextBox Text="{Binding TheoryUpdate.Abstract}" Padding="5" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
 
-            <Label Content="Detail:"/>
-            <TextBox Text="{Binding WordUpdate.Detail}" Padding="5" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Height="100"/>
+            <Label Content="Details:"/>
+            <TextBox Text="{Binding TheoryUpdate.Detail}" Padding="5" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Height="100"/>
 
             <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
                 <Button Content="Save"  Margin="5,0" Padding="10,5" Click="SaveButton_Click"/>

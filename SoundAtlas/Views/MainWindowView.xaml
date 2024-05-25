@@ -2,6 +2,8 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:SoundAtlas.Views"
+        xmlns:theory="clr-namespace:SoundAtlas.Views.Theory"
+        xmlns:word="clr-namespace:SoundAtlas.Views.Word"
         Title="Main Window" Height="720" Width="1280">
     <Grid>
         <TabControl>
@@ -9,10 +11,10 @@
                 <local:VirtualInstrumentsView />
             </TabItem>
             <TabItem Header="Theories">
-                <local:TheoriesView />
+                <theory:TheoriesView />
             </TabItem>
             <TabItem Header="Words">
-                <local:WordsView />
+                <word:WordsView />
             </TabItem>
         </TabControl>
     </Grid>
