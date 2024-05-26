@@ -41,7 +41,7 @@
         <Button Content="Add New Theory" Margin="10" Width="120" Click="AddButton_Click" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center"/>
 
         <!-- DataGrid in the center -->
-        <DataGrid ItemsSource="{Binding Theories}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="0,10,0,0" SelectionUnit="Cell" SelectionMode="Extended" RowHeaderWidth="0" Grid.Row="2" Grid.ColumnSpan="3">
+        <DataGrid ItemsSource="{Binding Theories}" RowDetailsVisibilityMode="Visible" AutoGenerateColumns="False" CanUserAddRows="False" Margin="0,10,0,0" SelectionUnit="Cell" SelectionMode="Extended" RowHeaderWidth="0" Grid.Row="2" Grid.ColumnSpan="3">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Select" Width="100">
                     <DataGridTemplateColumn.CellTemplate>
@@ -87,6 +87,14 @@
                 </DataGridTemplateColumn>
                 <DataGridTextColumn Header="Abstract" Binding="{Binding Abstract}" IsReadOnly="True" Width="2*" />
             </DataGrid.Columns>
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Margin="10">
+                        <Button Content="＋" Width="20" Height="20" Command="{Binding DataContext.AddWordCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}"/>
+                        <TextBlock Text="{Binding LinkedWords}" FontStyle="Italic"/>
+                    </StackPanel>
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
         </DataGrid>
     </Grid>
 </UserControl>
