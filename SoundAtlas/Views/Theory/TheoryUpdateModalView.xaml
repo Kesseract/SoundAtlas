@@ -1,7 +1,7 @@
 ﻿<Window x:Class="SoundAtlas.Views.Theory.TheoryUpdateModalView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Word Details" Height="350" Width="400" ResizeMode="NoResize">
+        Title="Word Details" Height="550" Width="400" ResizeMode="NoResize">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -10,6 +10,15 @@
         <StackPanel Grid.RowSpan="2">
             <Label Content="Word:"/>
             <TextBox Text="{Binding TheoryUpdate.Name}" FontWeight="Bold" Padding="5"/>
+
+            <Label Content="Melody Flag:" Margin="5"/>
+            <CheckBox IsChecked="{Binding TheoryUpdate.MelodyFlg}" Margin="5"/>
+
+            <Label Content="Chord Flag:" Margin="5"/>
+            <CheckBox IsChecked="{Binding TheoryUpdate.ChordFlg}" Margin="5"/>
+
+            <Label Content="Rhythm Flag:" Margin="5"/>
+            <CheckBox IsChecked="{Binding TheoryUpdate.RhythmFlg}" Margin="5"/>
 
             <Label Content="Abstract:"/>
             <TextBox Text="{Binding TheoryUpdate.Abstract}" Padding="5" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>

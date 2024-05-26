@@ -61,6 +61,30 @@
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
+                <!-- MelodyFlg カラムを追加 -->
+                <DataGridTemplateColumn Header="Melody Flag" Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked="{Binding MelodyFlg, Mode=OneWay}" IsEnabled="False" HorizontalAlignment="Center"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <!-- ChordFlg カラムを追加 -->
+                <DataGridTemplateColumn Header="Chord Flag" Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked="{Binding ChordFlg, Mode=OneWay}" IsEnabled="False" HorizontalAlignment="Center"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <!-- RhythmFlg カラムを追加 -->
+                <DataGridTemplateColumn Header="Rhythm Flag" Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked="{Binding RhythmFlg, Mode=OneWay}" IsEnabled="False" HorizontalAlignment="Center"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTextColumn Header="Abstract" Binding="{Binding Abstract}" IsReadOnly="True" Width="2*" />
             </DataGrid.Columns>
         </DataGrid>
