@@ -57,7 +57,7 @@
                         <Style TargetType="TextBlock">
                             <Setter Property="TextDecorations" Value="Underline"/>
                             <Setter Property="Cursor" Value="Hand"/>
-                            <EventSetter Event="MouseUp" Handler="WordTextBlock_MouseUp"/>
+                            <EventSetter Event="MouseUp" Handler="TheoryTextBlock_MouseUp"/>
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
@@ -90,7 +90,7 @@
             <DataGrid.RowDetailsTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" Margin="10">
-                        <Button Content="＋" Width="20" Height="20" Command="{Binding DataContext.AddWordCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}"/>
+                        <Button Content="＋" Width="20" Height="20" Click="OnAddWord_Click" Focusable="False" DataContext="{Binding}"/>
                         <TextBlock Text="{Binding LinkedWords}" FontStyle="Italic"/>
                     </StackPanel>
                 </DataTemplate>
