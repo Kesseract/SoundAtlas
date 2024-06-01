@@ -25,6 +25,26 @@
     <Compile Update="Views\Theory\TheoryDeleteModalView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\VirtualInstrument\Instrument\Categories\CategoryCreateModalView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\VirtualInstrument\Instrument\Categories\CategoryDeleteModalView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\VirtualInstrument\Instrument\Categories\CategoryUpdateModalView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ViewModels\VirtualInstrument\Instrument\Instruments\" />
+    <Folder Include="ViewModels\VirtualInstrument\VirtualInstrument\Parameters\" />
+    <Folder Include="ViewModels\VirtualInstrument\VirtualInstrument\Presets\" />
+    <Folder Include="ViewModels\VirtualInstrument\VirtualInstrument\VirtualInstruments\" />
+    <Folder Include="Views\VirtualInstrument\Instrument\Instruments\" />
+    <Folder Include="Views\VirtualInstrument\VirtualInstrument\VirtualInstruments\" />
+    <Folder Include="Views\VirtualInstrument\VirtualInstrument\Presets\" />
+    <Folder Include="Views\VirtualInstrument\VirtualInstrument\Parameters\" />
   </ItemGroup>
 
 </Project>

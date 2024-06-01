@@ -4,6 +4,8 @@
              xmlns:local="clr-namespace:SoundAtlas"
              StartupUri="Views/MainWindowView.xaml">
     <Application.Resources>
-        
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="メイリオ"/>
+        </Style>
     </Application.Resources>
 </Application>

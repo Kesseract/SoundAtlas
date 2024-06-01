@@ -17,6 +17,8 @@ namespace SoundAtlas.ViewModels.Theory
         public ObservableCollection<TheoryItemViewModel> Theories { get; private set; }
         private ObservableCollection<TheoryItemViewModel> _allTheories;
 
+        public ObservableCollection<string> AvailableWords { get; set; } = new ObservableCollection<string>();
+
         public string? SearchText { get; set; }
         public string? SelectedSearchColumn { get; set; }
         public ICommand ShowTheoryUpdateCommand { get; private set; }
@@ -108,9 +110,9 @@ namespace SoundAtlas.ViewModels.Theory
                 return;
             }
             // WordDetailViewModelのインスタンスを生成し、適切なモーダルビューを開く
-            var theoryUpdateViewModel = new TheoryUpdateViewModel(theory.TheoryId);
-            var theoryUpdateModal = new TheoryUpdateModalView(theoryUpdateViewModel);
-            theoryUpdateModal.ShowDialog();
+            var updateViewModel = new TheoryUpdateViewModel(theory.TheoryId);
+            var updateModal = new TheoryUpdateModalView(updateViewModel);
+            updateModal.ShowDialog();
         }
 
         public void ExportCsv()

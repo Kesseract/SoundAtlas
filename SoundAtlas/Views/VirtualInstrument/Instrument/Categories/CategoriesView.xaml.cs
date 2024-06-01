@@ -1,48 +1,48 @@
 ﻿using SoundAtlas.Models;
-using SoundAtlas.ViewModels.Word;
+using SoundAtlas.ViewModels.VirtualInstrument.Instrument.Categories;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace SoundAtlas.Views.Word
+namespace SoundAtlas.Views.VirtualInstrument.Instrument.Categories
 {
     /// <summary>
-    /// WordsView.xaml の相互作用ロジック
+    /// CategoriesView.xaml の相互作用ロジック
     /// </summary>
-    public partial class WordsView : UserControl
+    public partial class CategoriesView : UserControl
     {
-        public ObservableCollection<WordModel>? Words { get; private set; }
-        public WordsView()
+        public ObservableCollection<InstrumentCategoryModel>? Categories { get; private set; }
+        public CategoriesView()
         {
             InitializeComponent();
-            var wordViewModel = new WordViewModel();
-            this.DataContext = wordViewModel;
+            var categoryViewModel = new CategoryViewModel();
+            this.DataContext = categoryViewModel;
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             // ここで単語追加用のモーダルウィンドウを開く
-            WordCreateModalView addModal = new WordCreateModalView();
+            CategoryCreateModalView addModal = new CategoryCreateModalView();
             var result = addModal.ShowDialog();
             if (result == true)
             {
-                var viewModel = DataContext as WordViewModel;
+                var viewModel = DataContext as CategoryViewModel;
                 if (viewModel != null)
                 {
-                    viewModel.LoadWords();  // viewModelを通してLoadWordsを呼び出す
+                    viewModel.LoadCategories();  // viewModelを通してLoadCategoriesを呼び出す
                 }
             }
         }
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
-            var viewModel = DataContext as WordViewModel;
+            var viewModel = DataContext as CategoryViewModel;
             if (viewModel != null)
             {
                 viewModel.SearchText = SearchTextBox.Text;
                 viewModel.SelectedSearchColumn = (SearchColumnComboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
-                viewModel.SearchWords();
+                viewModel.SearchCategories();
             }
         }
 
@@ -51,18 +51,18 @@ namespace SoundAtlas.Views.Word
             var textBlock = sender as TextBlock;
             if (textBlock != null && e.ChangedButton == MouseButton.Left)
             {
-                WordItemViewModel? selectedWord = textBlock.DataContext as WordItemViewModel;
-                if (selectedWord != null)
+                CategoryItemViewModel? selectedCategory = textBlock.DataContext as CategoryItemViewModel;
+                if (selectedCategory != null)
                 {
-                    var detailViewModel = new WordUpdateViewModel(selectedWord.WordId);
-                    var detailModal = new WordUpdateModalView(detailViewModel);
+                    var detailViewModel = new CategoryUpdateViewModel(selectedCategory.CategoryId);
+                    var detailModal = new CategoryUpdateModalView(detailViewModel);
                     var result = detailModal.ShowDialog();
                     if (result == true)
                     {
-                        var viewModel = DataContext as WordViewModel;
+                        var viewModel = DataContext as CategoryViewModel;
                         if (viewModel != null)
                         {
-                            viewModel.LoadWords();  // viewModelを通してLoadWordsを呼び出す
+                            viewModel.LoadCategories();  // viewModelを通してLoadCategoriesを呼び出す
                         }
                     }
                 }
@@ -71,23 +71,23 @@ namespace SoundAtlas.Views.Word
 
         private void DeleteSelected_Click(object sender, RoutedEventArgs e)
         {
-            var viewModel = DataContext as WordViewModel;
+            var viewModel = DataContext as CategoryViewModel;
             if (viewModel != null)
             {
-                var selectedItems = viewModel.Words.Where(w => w.IsSelected).ToList();
+                var selectedItems = viewModel.Categories.Where(c => c.IsSelected).ToList();
                 if (selectedItems.Any())
                 {
-                    var deleteViewModel = new WordDeleteViewModel(selectedItems);
-                    var deleteModal = new WordDeleteModalView { DataContext = deleteViewModel };
+                    var deleteViewModel = new CategoryDeleteViewModel(selectedItems);
+                    var deleteModal = new CategoryDeleteModalView { DataContext = deleteViewModel };
                     var result = deleteModal.ShowDialog();
                     if (result == true)
                     {
-                        viewModel.LoadWords();
+                        viewModel.LoadCategories();
                     }
                 }
                 else
                 {
-                    MessageBox.Show("No words selected for deletion.", "No Selection", MessageBoxButton.OK);
+                    MessageBox.Show("No categories selected for deletion.", "No Selection", MessageBoxButton.OK);
                 }
             }
         }
@@ -97,7 +97,7 @@ namespace SoundAtlas.Views.Word
             var checkBox = sender as CheckBox;
             if (checkBox != null)
             {
-                var item = checkBox.DataContext as WordItemViewModel;
+                var item = checkBox.DataContext as CategoryItemViewModel;
                 if (item != null)
                 {
                     item.IsSelected = checkBox.IsChecked ?? false;
@@ -107,7 +107,7 @@ namespace SoundAtlas.Views.Word
 
         private void ExportCsvButton_Click(object sender, RoutedEventArgs e)
         {
-            var viewModel = DataContext as WordViewModel;
+            var viewModel = DataContext as CategoryViewModel;
             if (viewModel != null)
             {
                 viewModel.ExportCsv();
@@ -116,7 +116,7 @@ namespace SoundAtlas.Views.Word
 
         private void ImportCsvButton_Click(object sender, RoutedEventArgs e)
         {
-            var viewModel = DataContext as WordViewModel;
+            var viewModel = DataContext as CategoryViewModel;
             if (viewModel != null)
             {
                 viewModel.ImportCsv();

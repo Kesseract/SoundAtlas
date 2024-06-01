@@ -104,9 +104,9 @@ namespace SoundAtlas.ViewModels.Word
                 return;
             }
             // WordDetailViewModelのインスタンスを生成し、適切なモーダルビューを開く
-            var wordUpdateViewModel = new WordUpdateViewModel(word.WordId);
-            var wordUpdateModal = new WordUpdateModalView(wordUpdateViewModel);
-            wordUpdateModal.ShowDialog();
+            var updateViewModel = new WordUpdateViewModel(word.WordId);
+            var updateModal = new WordUpdateModalView(updateViewModel);
+            updateModal.ShowDialog();
         }
 
         public void ExportCsv()
