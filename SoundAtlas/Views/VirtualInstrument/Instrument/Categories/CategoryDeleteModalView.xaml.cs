@@ -4,7 +4,7 @@ using SoundAtlas.ViewModels.VirtualInstrument.Instrument.Categories;
 namespace SoundAtlas.Views.VirtualInstrument.Instrument.Categories
 {
     /// <summary>
-    /// WordDeleteModalView.xaml の相互作用ロジック
+    /// CategoryDeleteModalView.xaml の相互作用ロジック
     /// </summary>
     public partial class CategoryDeleteModalView : Window
     {

@@ -16,8 +16,8 @@ namespace SoundAtlas.Views.Theory
         public TheoriesView()
         {
             InitializeComponent();
-            var theoryViewModel = new TheoryViewModel();
-            this.DataContext = theoryViewModel;
+            var viewModel = new TheoryViewModel();
+            this.DataContext = viewModel;
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)

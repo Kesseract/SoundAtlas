@@ -16,8 +16,8 @@ namespace SoundAtlas.Views.Word
         public WordsView()
         {
             InitializeComponent();
-            var wordViewModel = new WordViewModel();
-            this.DataContext = wordViewModel;
+            var viewModel = new WordViewModel();
+            this.DataContext = viewModel;
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
