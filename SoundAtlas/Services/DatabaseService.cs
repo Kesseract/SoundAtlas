@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 public class DatabaseService
 {
     public void AddEntity<T>(T entity) where T : class
@@ -23,6 +24,14 @@ public class DatabaseService
         using (var context = new MyMusicAppContext())
         {
             return context.Set<T>().ToList();
+        }
+    }
+
+    public List<T> GetAllEntitiesIncluding<T, TProperty>(Expression<Func<T, TProperty>> navigationPropertyPath) where T : class
+    {
+        using (var context = new MyMusicAppContext())
+        {
+            return context.Set<T>().Include(navigationPropertyPath).ToList();
         }
     }
 

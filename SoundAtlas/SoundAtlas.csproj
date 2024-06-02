@@ -37,11 +37,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ViewModels\VirtualInstrument\Instrument\Instruments\" />
     <Folder Include="ViewModels\VirtualInstrument\VirtualInstrument\Parameters\" />
     <Folder Include="ViewModels\VirtualInstrument\VirtualInstrument\Presets\" />
     <Folder Include="ViewModels\VirtualInstrument\VirtualInstrument\VirtualInstruments\" />
-    <Folder Include="Views\VirtualInstrument\Instrument\Instruments\" />
     <Folder Include="Views\VirtualInstrument\VirtualInstrument\VirtualInstruments\" />
     <Folder Include="Views\VirtualInstrument\VirtualInstrument\Presets\" />
     <Folder Include="Views\VirtualInstrument\VirtualInstrument\Parameters\" />
