@@ -1,0 +1,17 @@
+﻿<Window x:Class="SoundAtlas.Views.VirtualInstrument.Instrument.Instruments.InstrumentCreateModalView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Add New Instrument" Height="350" Width="400"
+        ResizeMode="NoResize">
+    <StackPanel Margin="10">
+        <Label Content="Name:"/>
+        <TextBox x:Name="name" Margin="0,5"/>
+        <Label Content="Category:"/>
+        <ComboBox x:Name="categoryComboBox"
+          ItemsSource="{Binding Categories}"
+          DisplayMemberPath="Name"
+          SelectedValuePath="Id"
+          SelectedValue="{Binding SelectedCategoryId}"/>
+        <Button Content="Add" Margin="10" Width="100" HorizontalAlignment="Center" Click="Add_Click"/>
+    </StackPanel>
+</Window>

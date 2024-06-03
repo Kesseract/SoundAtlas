@@ -14,7 +14,7 @@ namespace SoundAtlas.ViewModels.VirtualInstrument.Instrument.Instruments
     {
         private readonly DatabaseService _databaseService;
         public ObservableCollection<InstrumentItemViewModel> Instruments { get; private set; }
-        private ObservableCollection<InstrumentItemViewModel> _allInstruments; // すべてのカテゴリーを保持するコレクション
+        private ObservableCollection<InstrumentItemViewModel> _allInstruments; // すべての楽器を保持するコレクション
 
         public string? SearchText { get; set; }
         public string? SelectedSearchColumn { get; set; }
@@ -80,7 +80,11 @@ namespace SoundAtlas.ViewModels.VirtualInstrument.Instrument.Instruments
             {
                 IEnumerable<InstrumentItemViewModel> filteredInstruments = _allInstruments;
 
-                if (SelectedSearchColumn == "Classification1")
+                if (SelectedSearchColumn == "Name")
+                {
+                    filteredInstruments = filteredInstruments.Where(w => w.Name != null && w.Name.Contains(SearchText, StringComparison.OrdinalIgnoreCase));
+                }
+                else if (SelectedSearchColumn == "Classification1")
                 {
                     filteredInstruments = filteredInstruments.Where(w => w.Classification1 != null && w.Classification1.Contains(SearchText, StringComparison.OrdinalIgnoreCase));
                 }
@@ -177,7 +181,6 @@ namespace SoundAtlas.ViewModels.VirtualInstrument.Instrument.Instruments
                             var newInstrument = new InstrumentModel
                             {
                                 Name = Instrument.Name,
-                                InstrumentCategoryId = ,
                             };
 
                             _databaseService.AddEntity(newInstrument);
