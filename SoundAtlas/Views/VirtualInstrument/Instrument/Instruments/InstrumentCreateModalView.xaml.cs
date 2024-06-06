@@ -11,19 +11,21 @@ namespace SoundAtlas.Views.VirtualInstrument.Instrument.Instruments
         public InstrumentCreateModalView()
         {
             InitializeComponent();
+            DataContext = new InstrumentCreateViewModel();
         }
 
         private void Add_Click(object sender, RoutedEventArgs e)
         {
-            var viewModel = new InstrumentCreateViewModel()
+            if (DataContext is InstrumentCreateViewModel viewModel)
             {
-                Name = name.Text,
-            };
+                viewModel.Name = name.Text;
+                viewModel.SelectedCategoryId = (int)categoryComboBox.SelectedValue;
 
-            viewModel.AddInstrument();
-            MessageBox.Show("Instrument create successfully.");
-            DialogResult = true;
-            Close();
+                viewModel.AddInstrument();
+                MessageBox.Show("Instrument created successfully.");
+                DialogResult = true;
+                Close();
+            }
         }
     }
 }

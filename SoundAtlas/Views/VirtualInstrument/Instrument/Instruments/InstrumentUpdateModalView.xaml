@@ -11,6 +11,13 @@
             <Label Content="Name:"/>
             <TextBox Text="{Binding InstrumentUpdate.Name}" Padding="5"/>
 
+            <Label Content="Category:"/>
+            <ComboBox x:Name="categoryComboBox"
+              ItemsSource="{Binding Categories}"
+              DisplayMemberPath="ClassificationJoin"
+              SelectedValuePath="CategoryId"
+              SelectedValue="{Binding InstrumentUpdate.SelectedCategoryId}" />
+
             <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
                 <Button Content="Save"  Margin="5,0" Padding="10,5" Click="SaveButton_Click"/>
                 <Button Content="Close" Margin="5,0" Padding="10,5" Click="CloseButton_Click"/>
