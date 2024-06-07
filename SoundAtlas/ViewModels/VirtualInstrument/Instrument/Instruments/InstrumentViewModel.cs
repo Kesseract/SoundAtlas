@@ -133,11 +133,11 @@ namespace SoundAtlas.ViewModels.VirtualInstrument.Instrument.Instruments
             if (saveFileDialog.ShowDialog() == true)
             {
                 StringBuilder csvContent = new StringBuilder();
-                csvContent.AppendLine("Classification1,Classification2,Classification3,Classification4");
+                csvContent.AppendLine("Name,Classification1,Classification2,Classification3,Classification4");
 
                 foreach (var Instrument in Instruments)
                 {
-                    csvContent.AppendLine($"{Instrument.Classification1},{Instrument.Classification2},{Instrument.Classification3},{Instrument.Classification4}");
+                    csvContent.AppendLine($"{Instrument.Name},{Instrument.Classification1},{Instrument.Classification2},{Instrument.Classification3},{Instrument.Classification4}");
                 }
 
                 File.WriteAllText(saveFileDialog.FileName, csvContent.ToString());
@@ -156,48 +156,49 @@ namespace SoundAtlas.ViewModels.VirtualInstrument.Instrument.Instruments
                 try
                 {
                     var csvContent = File.ReadAllLines(openFileDialog.FileName);
-                    var Instruments = new List<InstrumentItemViewModel>();
+                    // データベースから既存の楽器を取得
+                    var existingInstruments = _databaseService.GetAllEntities<InstrumentModel>().ToList();
 
                     foreach (var line in csvContent.Skip(1)) // ヘッダー行をスキップ
                     {
                         var columns = line.Split(',');
-                        if (columns.Length == 4)
+                        if (columns.Length == 5)
                         {
-                            Instruments.Add(new InstrumentItemViewModel
-                            {
-                                Classification1 = columns[0],
-                                Classification2 = columns[1],
-                                Classification3 = columns[2],
-                                Classification4 = columns[3]
-                            });
-                        }
-                    }
+                            var categoryQuery = _databaseService.GetAllEntities<InstrumentCategoryModel>().AsQueryable();
 
-                    foreach (var Instrument in Instruments)
-                    {
-                        if (!Instruments.Any(c => c.Classification1 == Instrument.Classification1 && c.Classification2 == Instrument.Classification2
-                        && c.Classification3 == Instrument.Classification3 && c.Classification4 == Instrument.Classification4))
-                        {
-                            var newInstrument = new InstrumentModel
-                            {
-                                Name = Instrument.Name,
-                            };
+                            // 各カテゴリフィールドが存在するかどうかを確認し、存在する場合のみクエリに含める
+                            if (!string.IsNullOrWhiteSpace(columns[1]))
+                                categoryQuery = categoryQuery.Where(c => c.Classification1 == columns[1]);
+                            if (columns.Length > 2 && !string.IsNullOrWhiteSpace(columns[2]))
+                                categoryQuery = categoryQuery.Where(c => c.Classification2 == columns[2]);
+                            if (columns.Length > 3 && !string.IsNullOrWhiteSpace(columns[3]))
+                                categoryQuery = categoryQuery.Where(c => c.Classification3 == columns[3]);
+                            if (columns.Length > 4 && !string.IsNullOrWhiteSpace(columns[4]))
+                                categoryQuery = categoryQuery.Where(c => c.Classification4 == columns[4]);
 
-                            _databaseService.AddEntity(newInstrument);
-                            Instruments.Add(new InstrumentItemViewModel
+                            var matchedCategory = categoryQuery.FirstOrDefault();
+
+                            if (matchedCategory != null)
                             {
-                                InstrumentId = Instrument.InstrumentId,
-                                Name = Instrument.Name,
-                                Classification1 = Instrument.Classification1,
-                                Classification2 = Instrument.Classification2,
-                                Classification3 = Instrument.Classification3,
-                                Classification4 = Instrument.Classification4,
-                                IsSelected = false
-                            });
+                                // 重複チェックを行う
+                                if (!existingInstruments.Any(i => i.Name == columns[0] && i.InstrumentCategoryId == matchedCategory.InstrumentCategoryId))
+                                {
+                                    var newInstrument = new InstrumentModel
+                                    {
+                                        Name = columns[0],
+                                        InstrumentCategoryId = matchedCategory.InstrumentCategoryId
+                                    };
+
+                                    _databaseService.AddEntity(newInstrument);
+                                    // 追加された楽器を既存のリストにも追加
+                                    existingInstruments.Add(newInstrument);
+                                }
+                            }
                         }
                     }
 
                     MessageBox.Show("CSVファイルのインポートが完了しました。", "インポート成功", MessageBoxButton.OK, MessageBoxImage.Information);
+                    LoadInstruments();
                 }
                 catch (Exception ex)
                 {
