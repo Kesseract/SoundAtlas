@@ -14,5 +14,21 @@ namespace SoundAtlas.Models
         [MaxLength(255)]
         [Required]
         public string Name { get; set; } = "";
+
+        [Column("site_url")]
+        public string? SiteUrl { get; set; }
+
+        [Column("version")]
+        [MaxLength(255)]
+        public string? Version { get; set; }
+
+        [Column("last_updated")]
+        public DateTime? LastUpdated { get; set; }
+
+        [Column("image")]
+        public string? Image { get; set; }
+
+        [Column("memo")]
+        public string? Memo { get; set; }
     }
 }

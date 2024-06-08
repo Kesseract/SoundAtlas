@@ -4,7 +4,7 @@ using SoundAtlas.ViewModels.Word;
 namespace SoundAtlas.Views
 {
     /// <summary>
-    /// AddWordModalView.xaml の相互作用ロジック
+    /// WordCreateModalView.xaml の相互作用ロジック
     /// </summary>
     public partial class WordCreateModalView : Window
     {

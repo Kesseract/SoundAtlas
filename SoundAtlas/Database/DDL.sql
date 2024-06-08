@@ -2,18 +2,12 @@
 
 CREATE TABLE virtual_instruments (
     virtual_instruments_id int AUTO_INCREMENT PRIMARY KEY,
-    name varchar(255) NOT NULL
-);
-
-CREATE TABLE virtual_instrument_details (
-    virtual_instrument_details_id int AUTO_INCREMENT PRIMARY KEY,
-    virtual_instruments_id int NOT NULL,
+    name varchar(255) NOT NULL,
     site_url text,
     version varchar(255),
     last_updated datetime NOT NULL,
     image text,
     memo text,
-    FOREIGN KEY (virtual_instruments_id) REFERENCES virtual_instruments(virtual_instruments_id)
 );
 
 CREATE TABLE instruments_categories (

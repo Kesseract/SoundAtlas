@@ -1,0 +1,21 @@
+﻿<Window x:Class="SoundAtlas.Views.VirtualInstrument.VirtualInstrument.VirtualInstruments.VirtualInstrumentCreateModalView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Add New VirtualInstrument" Height="500" Width="400"
+        ResizeMode="NoResize">
+    <StackPanel Margin="10">
+        <Label Content="Name:"/>
+        <TextBox x:Name="name" Margin="0,5"/>
+        <Label Content="SiteUrl:"/>
+        <TextBox x:Name="siteUrl" Margin="0,5"/>
+        <Label Content="Version:"/>
+        <TextBox x:Name="version" Margin="0,5"/>
+        <Label Content="LastUpdated:"/>
+        <DatePicker x:Name="lastUpdated" Margin="0,5"/>
+        <Label Content="Image:"/>
+        <TextBox x:Name="image" Margin="0,5"/>
+        <Label Content="Memo:"/>
+        <TextBox x:Name="memo" Margin="0,5"/>
+        <Button Content="Add" Margin="10" Width="100" HorizontalAlignment="Center" Click="Add_Click"/>
+    </StackPanel>
+</Window>

@@ -4,7 +4,7 @@ using SoundAtlas.ViewModels.VirtualInstrument.Instrument.Instruments;
 namespace SoundAtlas.Views.VirtualInstrument.Instrument.Instruments
 {
     /// <summary>
-    /// AddInstrumentModalView.xaml の相互作用ロジック
+    /// InstrumentCreateModalView.xaml の相互作用ロジック
     /// </summary>
     public partial class InstrumentCreateModalView : Window
     {

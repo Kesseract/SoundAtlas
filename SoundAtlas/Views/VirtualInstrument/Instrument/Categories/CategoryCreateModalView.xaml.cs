@@ -4,7 +4,7 @@ using SoundAtlas.ViewModels.VirtualInstrument.Instrument.Categories;
 namespace SoundAtlas.Views.VirtualInstrument.Instrument.Categories
 {
     /// <summary>
-    /// AddCategoryModalView.xaml の相互作用ロジック
+    /// CategoryCreateModalView.xaml の相互作用ロジック
     /// </summary>
     public partial class CategoryCreateModalView : Window
     {

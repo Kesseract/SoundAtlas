@@ -1,6 +1,7 @@
 ﻿<UserControl x:Class="SoundAtlas.Views.VirtualInstrument.VirtualInstrumentsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vi="clr-namespace:SoundAtlas.Views.VirtualInstrument.VirtualInstrument.VirtualInstruments"
              xmlns:ca="clr-namespace:SoundAtlas.Views.VirtualInstrument.Instrument.Categories"
              xmlns:in="clr-namespace:SoundAtlas.Views.VirtualInstrument.Instrument.Instruments">
     <Grid>
@@ -8,10 +9,9 @@
             <TabItem Header="VirtualInstrument">
                 <TabControl>
                     <TabItem Header="VirtualInstruments">
+                        <vi:VirtualInstrumentsView />
                     </TabItem>
                     <TabItem Header="Presets">
-                    </TabItem>
-                    <TabItem Header="Parameters">
                     </TabItem>
                 </TabControl>
             </TabItem>
