@@ -15,14 +15,14 @@ namespace SoundAtlas.Models
         public int VirtualInstrumentId { get; set; }
 
         [ForeignKey("VirtualInstrumentId")]
-        public virtual VirtualInstrumentModel? VirtualInstrument { get; set; }
+        public virtual VirtualInstrumentModel VirtualInstrument { get; set; } = null!;
 
         [Column("instruments_id")]
         [Required]
         public int InstrumentId { get; set; }
 
         [ForeignKey("InstrumentId")]
-        public virtual InstrumentModel? Instrument { get; set; }
+        public virtual InstrumentModel Instrument { get; set; } = null!;
 
         [Column("name")]
         [MaxLength(255)]

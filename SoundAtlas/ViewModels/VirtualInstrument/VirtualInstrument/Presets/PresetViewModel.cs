@@ -7,9 +7,6 @@ using System.Windows;
 using Microsoft.Win32;
 using System.Text;
 using System.IO;
-using System.Security.Policy;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
 
 namespace SoundAtlas.ViewModels.VirtualInstrument.VirtualInstrument.Presets
 {
@@ -119,16 +116,17 @@ namespace SoundAtlas.ViewModels.VirtualInstrument.VirtualInstrument.Presets
             SaveFileDialog saveFileDialog = new SaveFileDialog
             {
                 Filter = "CSV file (*.csv)|*.csv",
-                FileName = "Presets_export.csv"
+                FileName = "presets_export.csv"
             };
             if (saveFileDialog.ShowDialog() == true)
             {
                 StringBuilder csvContent = new StringBuilder();
-                csvContent.AppendLine("Name");
+                csvContent.AppendLine("Name,VirtualInstrumentName,InstrumentName,Rate,MelodyFlg,ChordFlg,BassFlg,ChordRhythmFlg,PercussionFlg");
 
                 foreach (var Preset in Presets)
                 {
-                    csvContent.AppendLine($"{Preset.PresetName}");
+                    csvContent.AppendLine($"{Preset.PresetName},{Preset.VirtualInstrumentName},{Preset.InstrumentName},{Preset.Rate}," +
+                        $"{Preset.MelodyFlg},{Preset.ChordFlg},{Preset.BassFlg},{Preset.ChordRhythmFlg},{Preset.PercussionFlg}");
                 }
 
                 File.WriteAllText(saveFileDialog.FileName, csvContent.ToString());
@@ -147,43 +145,46 @@ namespace SoundAtlas.ViewModels.VirtualInstrument.VirtualInstrument.Presets
                 try
                 {
                     var csvContent = File.ReadAllLines(openFileDialog.FileName);
-                    // データベースから既存の楽器を取得
-                    var existingVirtualInstruments = _databaseService.GetAllEntities<VirtualInstrumentModel>().ToList();
-                    var existingInstruments = _databaseService.GetAllEntities<InstrumentModel>().ToList();
+                    // 事前に必要なデータをロード
+                    var existingPresets = _databaseService.GetAllEntities<VirtualInstrumentPresetModel>().ToList();
+                    var allVirtualInstruments = _databaseService.GetAllEntities<VirtualInstrumentModel>().ToDictionary(v => v.Name, v => v);
+                    var allInstruments = _databaseService.GetAllEntities<InstrumentModel>().ToDictionary(i => i.Name, i => i);
 
                     foreach (var line in csvContent.Skip(1)) // ヘッダー行をスキップ
                     {
                         var columns = line.Split(',');
-                        if (columns.Length == 5)
+                        if (columns.Length == 9)
                         {
-                            var categoryQuery = _databaseService.GetAllEntities<InstrumentCategoryModel>().AsQueryable();
+                            // 名前で検索し、一致するIDを取得
+                            var virtualInstrument = allVirtualInstruments.GetValueOrDefault(columns[1]);
+                            var instrument = allInstruments.GetValueOrDefault(columns[2]);
 
-                            // 各カテゴリフィールドが存在するかどうかを確認し、存在する場合のみクエリに含める
-                            if (!string.IsNullOrWhiteSpace(columns[1]))
-                                categoryQuery = categoryQuery.Where(c => c.Classification1 == columns[1]);
-                            if (columns.Length > 2 && !string.IsNullOrWhiteSpace(columns[2]))
-                                categoryQuery = categoryQuery.Where(c => c.Classification2 == columns[2]);
-                            if (columns.Length > 3 && !string.IsNullOrWhiteSpace(columns[3]))
-                                categoryQuery = categoryQuery.Where(c => c.Classification3 == columns[3]);
-                            if (columns.Length > 4 && !string.IsNullOrWhiteSpace(columns[4]))
-                                categoryQuery = categoryQuery.Where(c => c.Classification4 == columns[4]);
-
-                            var matchedCategory = categoryQuery.FirstOrDefault();
-
-                            if (matchedCategory != null)
+                            if (virtualInstrument != null && instrument != null &&
+                                bool.TryParse(columns[4], out bool melodyFlg) &&
+                                bool.TryParse(columns[5], out bool chordFlg) &&
+                                bool.TryParse(columns[6], out bool bassFlg) &&
+                                bool.TryParse(columns[7], out bool chordRhythmFlg) &&
+                                bool.TryParse(columns[8], out bool percussionFlg))
                             {
-                                // 重複チェックを行う
-                                if (!existingInstruments.Any(i => i.Name == columns[0] && i.InstrumentCategoryId == matchedCategory.InstrumentCategoryId))
+                                // 既存データとの重複チェック
+                                if (!existingPresets.Any(p => p.Name == columns[0] && p.VirtualInstrumentId == virtualInstrument.VirtualInstrumentId && p.InstrumentId == instrument.InstrumentId
+                                && p.Rate == int.Parse(columns[3]) && p.MelodyFlg == melodyFlg && p.ChordFlg == chordFlg 
+                                && p.BassFlg == bassFlg && p.ChordRhythmFlg == chordRhythmFlg && p.PercussionFlg == percussionFlg))
                                 {
-                                    var newInstrument = new InstrumentModel
+                                    var newPreset = new VirtualInstrumentPresetModel
                                     {
                                         Name = columns[0],
-                                        InstrumentCategoryId = matchedCategory.InstrumentCategoryId
+                                        VirtualInstrumentId = virtualInstrument.VirtualInstrumentId,
+                                        InstrumentId = instrument.InstrumentId,
+                                        Rate = int.Parse(columns[3]),
+                                        MelodyFlg = melodyFlg,
+                                        ChordFlg = chordFlg,
+                                        BassFlg = bassFlg,
+                                        ChordRhythmFlg = chordRhythmFlg,
+                                        PercussionFlg = percussionFlg
                                     };
-
-                                    _databaseService.AddEntity(newInstrument);
-                                    // 追加された楽器を既存のリストにも追加
-                                    existingInstruments.Add(newInstrument);
+                                    _databaseService.AddEntity(newPreset);
+                                    existingPresets.Add(newPreset); // リストに追加して重複チェック用に保持
                                 }
                             }
                         }

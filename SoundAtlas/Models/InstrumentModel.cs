@@ -20,7 +20,7 @@ namespace SoundAtlas.Models
         public int InstrumentCategoryId { get; set; }
 
         [ForeignKey("InstrumentCategoryId")]
-        public virtual InstrumentCategoryModel? InstrumentCategory { get; set; }
+        public virtual InstrumentCategoryModel InstrumentCategory { get; set; } = null!;
     }
 
 }
