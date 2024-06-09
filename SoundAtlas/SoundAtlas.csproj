@@ -37,6 +37,18 @@
     <Compile Update="Views\VirtualInstrument\Instrument\Instruments\InstrumentDeleteModalView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\VirtualInstrument\VirtualInstrument\Presets\PresetCreateModalView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\VirtualInstrument\VirtualInstrument\Presets\PresetDeleteModalView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\VirtualInstrument\VirtualInstrument\Presets\PresetsView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\VirtualInstrument\VirtualInstrument\Presets\PresetUpdateModalView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\VirtualInstrument\VirtualInstrument\VirtualInstruments\VirtualInstrumentCreateModalView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -52,8 +64,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ViewModels\VirtualInstrument\VirtualInstrument\Presets\" />
-    <Folder Include="Views\VirtualInstrument\VirtualInstrument\Presets\" />
+    <Page Update="Views\VirtualInstrument\VirtualInstrument\Presets\PresetCreateModalView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\VirtualInstrument\VirtualInstrument\Presets\PresetDeleteModalView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\VirtualInstrument\VirtualInstrument\Presets\PresetsView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\VirtualInstrument\VirtualInstrument\Presets\PresetUpdateModalView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
 
 </Project>

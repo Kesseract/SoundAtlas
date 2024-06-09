@@ -27,11 +27,16 @@ public class DatabaseService
         }
     }
 
-    public List<T> GetAllEntitiesIncluding<T, TProperty>(Expression<Func<T, TProperty>> navigationPropertyPath) where T : class
+    public List<T> GetAllEntitiesIncluding<T>(params Expression<Func<T, object>>[] navigationPropertyPaths) where T : class
     {
         using (var context = new MyMusicAppContext())
         {
-            return context.Set<T>().Include(navigationPropertyPath).ToList();
+            IQueryable<T> query = context.Set<T>();
+            foreach (var navigationPropertyPath in navigationPropertyPaths)
+            {
+                query = query.Include(navigationPropertyPath);
+            }
+            return query.ToList();
         }
     }
 
@@ -45,6 +50,13 @@ public class DatabaseService
             var property = Expression.Property(parameter, columnName);
             var searchTextExpression = Expression.Constant(searchText);
             var containsMethod = typeof(string).GetMethod("Contains", new[] { typeof(string) });
+
+            // Null チェックを追加
+            if (containsMethod == null)
+            {
+                throw new InvalidOperationException("The Contains method is not found.");
+            }
+
             var containsExpression = Expression.Call(property, containsMethod, searchTextExpression);
 
             var lambda = Expression.Lambda<Func<T, bool>>(containsExpression, parameter);

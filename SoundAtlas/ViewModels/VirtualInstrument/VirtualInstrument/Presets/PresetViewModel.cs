@@ -1,125 +1,116 @@
 ﻿using Microsoft.Toolkit.Mvvm.Input;
 using SoundAtlas.Models;
-using SoundAtlas.Views.VirtualInstrument.Instrument.Instruments;
+using SoundAtlas.Views.VirtualInstrument.VirtualInstrument.Presets;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Windows;
 using Microsoft.Win32;
 using System.Text;
 using System.IO;
+using System.Security.Policy;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
-namespace SoundAtlas.ViewModels.VirtualInstrument.Instrument.Instruments
+namespace SoundAtlas.ViewModels.VirtualInstrument.VirtualInstrument.Presets
 {
-    public class InstrumentViewModel
+    public class PresetViewModel
     {
         private readonly DatabaseService _databaseService;
-        public ObservableCollection<InstrumentItemViewModel> Instruments { get; private set; }
-        private ObservableCollection<InstrumentItemViewModel> _allInstruments; // すべての楽器を保持するコレクション
+        public ObservableCollection<PresetItemViewModel> Presets { get; private set; }
+        private ObservableCollection<PresetItemViewModel> _allPresets; // すべての楽器を保持するコレクション
 
         public string? SearchText { get; set; }
         public string? SelectedSearchColumn { get; set; }
-        public ICommand ShowInstrumentUpdateCommand { get; private set; }
-        public ICommand? DeleteSelectedInstrumentsCommand { get; private set; }
+        public ICommand ShowPresetUpdateCommand { get; private set; }
+        public ICommand? DeleteSelectedPresetsCommand { get; private set; }
 
-        public InstrumentViewModel()
+        public PresetViewModel()
         {
             _databaseService = new DatabaseService();
-            Instruments = new ObservableCollection<InstrumentItemViewModel>();
-            _allInstruments = new ObservableCollection<InstrumentItemViewModel>();
+            Presets = new ObservableCollection<PresetItemViewModel>();
+            _allPresets = new ObservableCollection<PresetItemViewModel>();
             Application.Current.Dispatcher.Invoke(() => {
-                LoadInstruments();
+                LoadPresets();
             });
-            ShowInstrumentUpdateCommand = new RelayCommand<InstrumentItemViewModel>(ShowInstrumentUpdate);
+            ShowPresetUpdateCommand = new RelayCommand<PresetItemViewModel>(ShowPresetUpdate);
         }
 
         private void OnDataChanged(object sender, EventArgs e)
         {
             // データベースの変更があった場合に単語リストを再読み込み
             Application.Current.Dispatcher.Invoke(() => {
-                LoadInstruments();
+                LoadPresets();
             });
         }
 
-        public void LoadInstruments()
+        public void LoadPresets()
         {
-            Instruments.Clear(); // 既存のコレクションをクリアする
-            _allInstruments.Clear(); // 既存のコレクションをクリアする
+            Presets.Clear(); // 既存のコレクションをクリアする
+            _allPresets.Clear(); // 既存のコレクションをクリアする
 
             // データベースからデータを取得
-            var InstrumentList = _databaseService.GetAllEntitiesIncluding<InstrumentModel>(instrument => instrument.InstrumentCategory).Select(Instrument => new InstrumentItemViewModel
+            var PresetList = _databaseService.GetAllEntitiesIncluding<VirtualInstrumentPresetModel>(preset => preset.VirtualInstrument, preset => preset.Instrument).Select(Preset => new PresetItemViewModel
             {
-                InstrumentId = Instrument.InstrumentId,
-                Name = Instrument.Name,
-                Classification1 = Instrument.InstrumentCategory.Classification1,
-                Classification2 = Instrument.InstrumentCategory.Classification2,
-                Classification3 = Instrument.InstrumentCategory.Classification3,
-                Classification4 = Instrument.InstrumentCategory.Classification4,
+                PresetId = Preset.VirtualInstrumentPresetId,
+                PresetName = Preset.Name,
+                VirtualInstrumentName = Preset.VirtualInstrument.Name,
+                InstrumentName = Preset.Instrument.Name,
+                Rate = Preset.Rate,
+                MelodyFlg = Preset.MelodyFlg,
+                ChordFlg = Preset.ChordFlg,
+                BassFlg = Preset.BassFlg,
+                ChordRhythmFlg = Preset.ChordRhythmFlg,
+                PercussionFlg = Preset.PercussionFlg,
                 IsSelected = false
             }).ToList();
 
             // コレクションにデータを追加
-            foreach (var Instrument in InstrumentList)
+            foreach (var Preset in PresetList)
             {
-                Instruments.Add(Instrument);
-                _allInstruments.Add(Instrument);
+                Presets.Add(Preset);
+                _allPresets.Add(Preset);
             }
         }
 
-        public void SearchInstruments()
+        public void SearchPresets()
         {
             if (string.IsNullOrWhiteSpace(SearchText))
             {
                 // 検索テキストが空の場合、全データを表示
-                Instruments.Clear();
-                foreach (var Instrument in _allInstruments)
+                Presets.Clear();
+                foreach (var Preset in _allPresets)
                 {
-                    Instruments.Add(Instrument);
+                    Presets.Add(Preset);
                 }
             }
             else
             {
-                IEnumerable<InstrumentItemViewModel> filteredInstruments = _allInstruments;
+                IEnumerable<PresetItemViewModel> filteredPresets = _allPresets;
 
                 if (SelectedSearchColumn == "Name")
                 {
-                    filteredInstruments = filteredInstruments.Where(w => w.Name != null && w.Name.Contains(SearchText, StringComparison.OrdinalIgnoreCase));
-                }
-                else if (SelectedSearchColumn == "Classification1")
-                {
-                    filteredInstruments = filteredInstruments.Where(w => w.Classification1 != null && w.Classification1.Contains(SearchText, StringComparison.OrdinalIgnoreCase));
-                }
-                else if (SelectedSearchColumn == "Classification2")
-                {
-                    filteredInstruments = filteredInstruments.Where(w => w.Classification2 != null && w.Classification2.Contains(SearchText, StringComparison.OrdinalIgnoreCase));
-                }
-                else if (SelectedSearchColumn == "Classification3")
-                {
-                    filteredInstruments = filteredInstruments.Where(w => w.Classification3 != null && w.Classification3.Contains(SearchText, StringComparison.OrdinalIgnoreCase));
-                }
-                else if (SelectedSearchColumn == "Classification4")
-                {
-                    filteredInstruments = filteredInstruments.Where(w => w.Classification4 != null && w.Classification4.Contains(SearchText, StringComparison.OrdinalIgnoreCase));
+                    filteredPresets = filteredPresets.Where(w => w.PresetName != null && w.PresetName.Contains(SearchText, StringComparison.OrdinalIgnoreCase));
                 }
 
-                Instruments.Clear();
-                foreach (var Instrument in filteredInstruments)
+                Presets.Clear();
+                foreach (var Preset in filteredPresets)
                 {
-                    Instruments.Add(Instrument);
+                    Presets.Add(Preset);
                 }
             }
         }
 
-        private void ShowInstrumentUpdate(InstrumentItemViewModel? Instrument)
+        private void ShowPresetUpdate(PresetItemViewModel? Preset)
         {
-            if (Instrument == null)
+            if (Preset == null)
             {
                 // 例: 適切なエラーメッセージを表示
-                MessageBox.Show("The selected Instrument is null.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("The selected Preset is null.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            // InstrumentDetailViewModelのインスタンスを生成し、適切なモーダルビューを開く
-            var updateViewModel = new InstrumentUpdateViewModel(Instrument.InstrumentId);
-            var updateModal = new InstrumentUpdateModalView(updateViewModel);
+            // PresettDetailViewModelのインスタンスを生成し、適切なモーダルビューを開く
+            var updateViewModel = new PresetUpdateViewModel(Preset.PresetId);
+            var updateModal = new PresetUpdateModalView(updateViewModel);
             updateModal.ShowDialog();
         }
 
@@ -128,16 +119,16 @@ namespace SoundAtlas.ViewModels.VirtualInstrument.Instrument.Instruments
             SaveFileDialog saveFileDialog = new SaveFileDialog
             {
                 Filter = "CSV file (*.csv)|*.csv",
-                FileName = "Instruments_export.csv"
+                FileName = "Presets_export.csv"
             };
             if (saveFileDialog.ShowDialog() == true)
             {
                 StringBuilder csvContent = new StringBuilder();
-                csvContent.AppendLine("Name,Classification1,Classification2,Classification3,Classification4");
+                csvContent.AppendLine("Name");
 
-                foreach (var Instrument in Instruments)
+                foreach (var Preset in Presets)
                 {
-                    csvContent.AppendLine($"{Instrument.Name},{Instrument.Classification1},{Instrument.Classification2},{Instrument.Classification3},{Instrument.Classification4}");
+                    csvContent.AppendLine($"{Preset.PresetName}");
                 }
 
                 File.WriteAllText(saveFileDialog.FileName, csvContent.ToString());
@@ -157,6 +148,7 @@ namespace SoundAtlas.ViewModels.VirtualInstrument.Instrument.Instruments
                 {
                     var csvContent = File.ReadAllLines(openFileDialog.FileName);
                     // データベースから既存の楽器を取得
+                    var existingVirtualInstruments = _databaseService.GetAllEntities<VirtualInstrumentModel>().ToList();
                     var existingInstruments = _databaseService.GetAllEntities<InstrumentModel>().ToList();
 
                     foreach (var line in csvContent.Skip(1)) // ヘッダー行をスキップ
@@ -198,7 +190,7 @@ namespace SoundAtlas.ViewModels.VirtualInstrument.Instrument.Instruments
                     }
 
                     MessageBox.Show("CSVファイルのインポートが完了しました。", "インポート成功", MessageBoxButton.OK, MessageBoxImage.Information);
-                    LoadInstruments();
+                    LoadPresets();
                 }
                 catch (Exception ex)
                 {
@@ -208,14 +200,18 @@ namespace SoundAtlas.ViewModels.VirtualInstrument.Instrument.Instruments
         }
     }
 
-    public class InstrumentItemViewModel
+    public class PresetItemViewModel
     {
-        public int InstrumentId { get; set; }
-        public string Name { get; set; } = "";
-        public string Classification1 { get; set; } = "";
-        public string? Classification2 { get; set; }
-        public string? Classification3 { get; set; }
-        public string? Classification4 { get; set; }
+        public int PresetId { get; set; }
+        public string PresetName { get; set; } = "";
+        public string VirtualInstrumentName { get; set; } = "";
+        public string InstrumentName { get; set; } = "";
+        public int Rate {  get; set; }
+        public bool MelodyFlg { get; set; }
+        public bool ChordFlg { get; set; }
+        public bool BassFlg { get; set; }
+        public bool ChordRhythmFlg { get; set; }
+        public bool PercussionFlg { get; set; }
         public bool IsSelected { get; set; }
     }
 

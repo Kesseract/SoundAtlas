@@ -1,0 +1,35 @@
+﻿<Window x:Class="SoundAtlas.Views.VirtualInstrument.VirtualInstrument.Presets.PresetCreateModalView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Add New Preset" Height="700" Width="400"
+        ResizeMode="NoResize">
+    <StackPanel Margin="10">
+        <Label Content="Name:"/>
+        <TextBox x:Name="name" Margin="0,5"/>
+        <Label Content="VirtualInstrument:"/>
+        <ComboBox x:Name="virtualInstrumentComboBox"
+          ItemsSource="{Binding VirtualInstruments}"
+          DisplayMemberPath="Name"
+          SelectedValuePath="VirtualInstrumentId"
+          SelectedValue="{Binding SelectedVirtualInstrumentId}"/>
+        <Label Content="Instrument:"/>
+        <ComboBox x:Name="instrumentComboBox"
+          ItemsSource="{Binding Instruments}"
+          DisplayMemberPath="Name"
+          SelectedValuePath="InstrumentId"
+          SelectedValue="{Binding SelectedInstrumentId}"/>
+        <Label Content="Rate:"/>
+        <TextBox x:Name="rate" Margin="0,5" PreviewTextInput="Rate_PreviewTextInput"/>
+        <TextBlock Text="Melody Flag:" Margin="5"/>
+        <CheckBox x:Name="checkBoxMelodyFlg" Margin="5"/>
+        <TextBlock Text="Chord Flag:" Margin="5"/>
+        <CheckBox x:Name="checkBoxChordFlg" Margin="5"/>
+        <TextBlock Text="Bass Flag:" Margin="5"/>
+        <CheckBox x:Name="checkBoxBassFlg" Margin="5"/>
+        <TextBlock Text="ChordRhythm Flag:" Margin="5"/>
+        <CheckBox x:Name="checkBoxChordRhythmFlg" Margin="5"/>
+        <TextBlock Text="Percussion Flag:" Margin="5"/>
+        <CheckBox x:Name="checkBoxPercussionFlg" Margin="5"/>
+        <Button Content="Add" Margin="10" Width="100" HorizontalAlignment="Center" Click="Add_Click"/>
+    </StackPanel>
+</Window>

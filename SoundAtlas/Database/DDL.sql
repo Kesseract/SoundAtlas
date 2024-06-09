@@ -29,7 +29,7 @@ CREATE TABLE virtual_instrument_presets (
     virtual_instrument_presets_id int AUTO_INCREMENT PRIMARY KEY,
     virtual_instruments_id int NOT NULL,
     instruments_id int NOT NULL,
-    preset_name varchar(255) NOT NULL,
+    name varchar(255) NOT NULL,
     rate int NOT NULL,
     melody_flg boolean NOT NULL,
     chord_flg boolean NOT NULL,

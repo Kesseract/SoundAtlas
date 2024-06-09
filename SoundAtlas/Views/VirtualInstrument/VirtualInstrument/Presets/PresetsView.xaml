@@ -1,0 +1,107 @@
+﻿<UserControl x:Class="SoundAtlas.Views.VirtualInstrument.VirtualInstrument.Presets.PresetsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SoundAtlas.Views.VirtualInstrument.VirtualInstrument.Presets"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- 新しい行にCSVエクスポートボタンを追加 -->
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button Content="Export to CSV" Margin="10" Width="120" Click="ExportCsvButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Button Content="Import from CSV" Margin="10" Width="120" Click="ImportCsvButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <!-- Delete Button on the left -->
+        <Button Content="Delete Selected Presets" Margin="10" Width="180" Click="DeleteSelected_Click" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"/>
+
+        <!-- Search Box and Search Button in the center -->
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <ComboBox x:Name="SearchColumnComboBox" Width="120" Margin="10" VerticalAlignment="Center">
+                <ComboBoxItem Content="name" IsSelected="True"/>
+                <ComboBoxItem Content="virtualinstrument"/>
+                <ComboBoxItem Content="instrument"/>
+                <ComboBoxItem Content="rate"/>
+            </ComboBox>
+            <TextBox x:Name="SearchTextBox" Width="200" Margin="10" VerticalAlignment="Center" />
+            <Button Content="Search" Width="80" Click="SearchButton_Click" VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <!-- Add Button on the right -->
+        <Button Content="Add New Preset" Margin="10" Width="150" Click="AddButton_Click" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+
+        <!-- DataGrid in the center -->
+        <DataGrid ItemsSource="{Binding Presets}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="0,10,0,0" SelectionUnit="Cell" SelectionMode="Extended" RowHeaderWidth="0" Grid.Row="2" Grid.ColumnSpan="3">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Select" Width="100">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid HorizontalAlignment="Center">
+                                <CheckBox IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}" Click="CheckBox_Click" />
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Name" Binding="{Binding PresetName}" IsReadOnly="True" Width="*">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="TextDecorations" Value="Underline"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+                            <EventSetter Event="MouseUp" Handler="TextBlock_MouseUp"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="VirtualInstrument" Binding="{Binding VirtualInstrumentName}" IsReadOnly="True" Width="*" />
+                <DataGridTextColumn Header="Instrument" Binding="{Binding InstrumentName}" IsReadOnly="True" Width="*" />
+                <DataGridTextColumn Header="Rate" Binding="{Binding Rate}" IsReadOnly="True" Width="*" />
+                <DataGridTemplateColumn Header="Melody Flag" Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked="{Binding MelodyFlg, Mode=OneWay}" IsEnabled="False" HorizontalAlignment="Center"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Chord Flag" Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked="{Binding ChordFlg, Mode=OneWay}" IsEnabled="False" HorizontalAlignment="Center"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Bass Flag" Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked="{Binding BassFlg, Mode=OneWay}" IsEnabled="False" HorizontalAlignment="Center"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="ChordRhythm Flag" Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked="{Binding ChordRhythmFlg, Mode=OneWay}" IsEnabled="False" HorizontalAlignment="Center"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Percussion Flag" Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked="{Binding PercussionFlg, Mode=OneWay}" IsEnabled="False" HorizontalAlignment="Center"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>
