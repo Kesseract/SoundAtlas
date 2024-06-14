@@ -101,6 +101,15 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Parameter" Binding="{Binding Parameter}" IsReadOnly="True" Width="*">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="TextDecorations" Value="Underline"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+                            <EventSetter Event="MouseUp" Handler="Parameter_MouseUp"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

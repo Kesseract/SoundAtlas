@@ -70,6 +70,21 @@ namespace SoundAtlas.Views.VirtualInstrument.VirtualInstrument.Presets
             }
         }
 
+        private void Parameter_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            var textBlock = sender as TextBlock;
+            if (textBlock != null && e.ChangedButton == MouseButton.Left)
+            {
+                PresetItemViewModel? selectedPreset = textBlock.DataContext as PresetItemViewModel;
+                if (selectedPreset != null)
+                {
+                    var detailViewModel = new PresetUpdateViewModel(selectedPreset.PresetId);
+                    var detailModal = new PresetUpdateModalView(detailViewModel);
+                    var result = detailModal.ShowDialog();
+                }
+            }
+        }
+
         private void DeleteSelected_Click(object sender, RoutedEventArgs e)
         {
             var viewModel = DataContext as PresetViewModel;

@@ -58,7 +58,8 @@ namespace SoundAtlas.ViewModels.VirtualInstrument.VirtualInstrument.Presets
                 BassFlg = Preset.BassFlg,
                 ChordRhythmFlg = Preset.ChordRhythmFlg,
                 PercussionFlg = Preset.PercussionFlg,
-                IsSelected = false
+                IsSelected = false,
+                Parameter = "Parameter"
             }).ToList();
 
             // コレクションにデータを追加
@@ -214,6 +215,7 @@ namespace SoundAtlas.ViewModels.VirtualInstrument.VirtualInstrument.Presets
         public bool ChordRhythmFlg { get; set; }
         public bool PercussionFlg { get; set; }
         public bool IsSelected { get; set; }
+        public string Parameter { get; set; } = "Parameter";
     }
 
 }
