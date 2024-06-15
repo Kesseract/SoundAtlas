@@ -78,9 +78,4 @@
     </Page>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ViewModels\VirtualInstrument\VirtualInstrument\Parameters\" />
-    <Folder Include="Views\VirtualInstrument\VirtualInstrument\Parameters\" />
-  </ItemGroup>
-
 </Project>
