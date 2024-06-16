@@ -80,7 +80,7 @@ namespace SoundAtlas.Views.VirtualInstrument.VirtualInstrument.Presets
                 PresetItemViewModel? selectedPreset = textBlock.DataContext as PresetItemViewModel;
                 if (selectedPreset != null)
                 {
-                    var parameterEditViewModel = new ParameterViewModel();
+                    var parameterEditViewModel = new ParameterViewModel(selectedPreset.PresetId);
                     var parameterEditModal = new ParameterEditModalView(selectedPreset.PresetId);
                     var result = parameterEditModal.ShowDialog();
                 }

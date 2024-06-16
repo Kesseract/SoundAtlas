@@ -16,22 +16,33 @@ namespace SoundAtlas.Views.VirtualInstrument.VirtualInstrument.Parameters
         public ParameterEditModalView(int presetId)
         {
             InitializeComponent();
-            _viewModel = new ParameterViewModel();
-            _viewModel.LoadParameters(presetId);
+            _viewModel = new ParameterViewModel(presetId);
             DataContext = _viewModel;
         }
 
         private void AddParameter(object sender, RoutedEventArgs e)
         {
-            _viewModel.AddParameter(parameterName.Text, parameterValue.Text);
-            parameterName.Clear();
-            parameterValue.Clear();
+            // TextBoxからテキストを取得
+            var paramName = parameterName.Text;
+            var paramValue = parameterValue.Text;
+
+            // パラメータが両方とも入力されていればViewModelに追加
+            if (!string.IsNullOrWhiteSpace(paramName) && !string.IsNullOrWhiteSpace(paramValue))
+            {
+                _viewModel.AddParameter(paramName, paramValue);
+                parameterName.Clear();
+                parameterValue.Clear();
+            }
+            else
+            {
+                MessageBox.Show("Both parameter name and value must be provided.");
+            }
         }
 
         private void RemoveParameter(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            var parameter = button?.CommandParameter as VirtualInstrumentParameterModel;
+            var parameter = button?.DataContext as ParameterItemViewModel;
             if (parameter != null)
             {
                 _viewModel.RemoveParameter(parameter);
@@ -40,31 +51,9 @@ namespace SoundAtlas.Views.VirtualInstrument.VirtualInstrument.Parameters
 
         private void SaveParameters(object sender, RoutedEventArgs e)
         {
-            // 保存ロジック
-            this.DialogResult = true;
-            this.Close();
-        }
-
-        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            TextBox textBox = sender as TextBox;
-            if (textBox.Text == textBox.Tag.ToString())
-            {
-                textBox.Text = "";
-                textBox.Foreground = Brushes.Black;
-                textBox.FontStyle = FontStyles.Normal;
-            }
-        }
-
-        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            TextBox textBox = sender as TextBox;
-            if (string.IsNullOrWhiteSpace(textBox.Text))
-            {
-                textBox.Text = textBox.Tag.ToString();
-                textBox.Foreground = Brushes.LightGray;
-                textBox.FontStyle = FontStyles.Italic;
-            }
+            _viewModel.SaveParameters();
+            this.DialogResult = true; // ダイアログの結果を設定
+            this.Close(); // ダイアログを閉じる
         }
     }
 }
