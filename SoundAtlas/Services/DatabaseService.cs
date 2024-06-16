@@ -19,6 +19,14 @@ public class DatabaseService
         }
     }
 
+    public List<T> GetEntitiesByForeignKey<T>(int presetId, string Id) where T : class, new()
+    {
+        using (var context = new MyMusicAppContext())
+        {
+            return context.Set<T>().Where(p => EF.Property<int>(p, Id) == presetId).ToList();
+        }
+    }
+
     public List<T> GetAllEntities<T>() where T : class
     {
         using (var context = new MyMusicAppContext())

@@ -1,5 +1,7 @@
 ﻿using SoundAtlas.Models;
 using SoundAtlas.ViewModels.VirtualInstrument.VirtualInstrument.Presets;
+using SoundAtlas.ViewModels.VirtualInstrument.VirtualInstrument.Parameters;
+using SoundAtlas.Views.VirtualInstrument.VirtualInstrument.Parameters;
 using SoundAtlas.Views.VirtualInstrument.VirtualInstrument.Presets;
 using System.Collections.ObjectModel;
 using System.Windows;
@@ -78,9 +80,9 @@ namespace SoundAtlas.Views.VirtualInstrument.VirtualInstrument.Presets
                 PresetItemViewModel? selectedPreset = textBlock.DataContext as PresetItemViewModel;
                 if (selectedPreset != null)
                 {
-                    var detailViewModel = new PresetUpdateViewModel(selectedPreset.PresetId);
-                    var detailModal = new PresetUpdateModalView(detailViewModel);
-                    var result = detailModal.ShowDialog();
+                    var parameterEditViewModel = new ParameterViewModel();
+                    var parameterEditModal = new ParameterEditModalView(selectedPreset.PresetId);
+                    var result = parameterEditModal.ShowDialog();
                 }
             }
         }

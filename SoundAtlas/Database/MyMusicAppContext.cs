@@ -10,7 +10,12 @@ public class MyMusicAppContext : DbContext
     public DbSet<TheoryWordLinkageModel> TheoryWordLinkages { get; set; }
     public DbSet<VirtualInstrumentModel> VirtualInstruments { get; set; }
     public DbSet<VirtualInstrumentPresetModel> VirtualInstrumentPresets { get; set; }
+    public DbSet<VirtualInstrumentParameterModel> VirtualInstrumentParameters { get; set; }
     public DbSet<WordModel> Words { get; set; }
+
+    // コマンド
+    // Add-Migration [MigrationName]
+    // Update-Databse
 
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
