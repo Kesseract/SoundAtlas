@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vi="clr-namespace:SoundAtlas.Views.VirtualInstrument.VirtualInstrument.VirtualInstruments"
              xmlns:pr="clr-namespace:SoundAtlas.Views.VirtualInstrument.VirtualInstrument.Presets"
+             xmlns:pa="clr-namespace:SoundAtlas.Views.VirtualInstrument.VirtualInstrument.Parameters"
              xmlns:ca="clr-namespace:SoundAtlas.Views.VirtualInstrument.Instrument.Categories"
              xmlns:in="clr-namespace:SoundAtlas.Views.VirtualInstrument.Instrument.Instruments">
     <Grid>
@@ -14,6 +15,9 @@
                     </TabItem>
                     <TabItem Header="Presets">
                         <pr:PresetsView />
+                    </TabItem>
+                    <TabItem Header="Parameters">
+                        <pa:ParametersView />
                     </TabItem>
                 </TabControl>
             </TabItem>

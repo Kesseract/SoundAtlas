@@ -37,6 +37,9 @@
     <Compile Update="Views\VirtualInstrument\Instrument\Instruments\InstrumentDeleteModalView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\VirtualInstrument\VirtualInstrument\Parameters\ParametersView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\VirtualInstrument\VirtualInstrument\Presets\PresetCreateModalView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>

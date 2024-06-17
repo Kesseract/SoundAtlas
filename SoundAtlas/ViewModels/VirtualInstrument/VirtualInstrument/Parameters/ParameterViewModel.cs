@@ -1,12 +1,11 @@
 ﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
+using Microsoft.Win32;
 using SoundAtlas.Models;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
+using System.Text;
+using System.IO;
 
 namespace SoundAtlas.ViewModels.VirtualInstrument.VirtualInstrument.Parameters
 {
@@ -86,6 +85,79 @@ namespace SoundAtlas.ViewModels.VirtualInstrument.VirtualInstrument.Parameters
             catch (Exception ex)
             {
                 MessageBox.Show($"Failed to save parameters: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        public void ExportCsv()
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                Filter = "CSV file (*.csv)|*.csv",
+                FileName = "parameters_export.csv"
+            };
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                StringBuilder csvContent = new StringBuilder();
+                csvContent.AppendLine("PresetName,ParameterName,ParameterValue");
+
+                var allParameters = _databaseService.GetAllEntitiesIncluding<VirtualInstrumentParameterModel>(parameter => parameter.VirtualInstrumentPreset);
+                foreach (var Parameter in allParameters)
+                {
+                    csvContent.AppendLine($"{Parameter.VirtualInstrumentPreset.Name},{Parameter.Name},{Parameter.Value}");
+                }
+
+                File.WriteAllText(saveFileDialog.FileName, csvContent.ToString());
+                MessageBox.Show("CSV Export successful", "Export successful", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        public void ImportCsv()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "CSV file (*.csv)|*.csv"
+            };
+            if (openFileDialog.ShowDialog() == true)
+            {
+                try
+                {
+                    var csvContent = File.ReadAllLines(openFileDialog.FileName);
+                    // 事前に必要なデータをロード
+                    var existingPresets = _databaseService.GetAllEntities<VirtualInstrumentParameterModel>().ToList();
+                    var allPresets = _databaseService.GetAllEntities<VirtualInstrumentPresetModel>().ToDictionary(v => v.Name, v => v);
+
+                    foreach (var line in csvContent.Skip(1)) // ヘッダー行をスキップ
+                    {
+                        var columns = line.Split(',');
+                        if (columns.Length == 3)
+                        {
+                            // 名前で検索し、一致するIDを取得
+                            var virtualInstrumentPreset = allPresets.GetValueOrDefault(columns[0]);
+
+                            if (virtualInstrumentPreset != null)
+                            {
+                                // 既存データとの重複チェック
+                                if (!existingPresets.Any(p => p.VirtualInstrumentPresetId == virtualInstrumentPreset.VirtualInstrumentPresetId && p.Name == columns[1] && p.Value == columns[2]))
+                                {
+                                    var newPreset = new VirtualInstrumentParameterModel
+                                    {
+                                        VirtualInstrumentPresetId = virtualInstrumentPreset.VirtualInstrumentPresetId,
+                                        Name = columns[1],
+                                        Value = columns[2],
+                                    };
+                                    _databaseService.AddEntity(newPreset);
+                                    existingPresets.Add(newPreset); // リストに追加して重複チェック用に保持
+                                }
+                            }
+                        }
+                    }
+
+                    MessageBox.Show("CSVファイルのインポートが完了しました。", "インポート成功", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"CSVファイルのインポートに失敗しました: {ex.Message}", "インポート失敗", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
     }
