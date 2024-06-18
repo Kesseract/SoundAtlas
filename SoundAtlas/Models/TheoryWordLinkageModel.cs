@@ -15,13 +15,13 @@ namespace SoundAtlas.Models
         public int TheoryId { get; set; }
 
         [ForeignKey("TheoryId")]
-        public virtual TheoryModel Theory { get; set; } = new TheoryModel();
+        public virtual TheoryModel Theory { get; set; } = null!;
 
         [Column("words_id")]
         [Required]
         public int WordId { get; set; }
 
         [ForeignKey("WordId")]
-        public virtual WordModel Word { get; set; } = new WordModel();
+        public virtual WordModel Word { get; set; } = null!;
     }
 }

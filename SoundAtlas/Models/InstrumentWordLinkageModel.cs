@@ -15,13 +15,13 @@ namespace SoundAtlas.Models
         public int VirtualInstrumentPresetId { get; set; }
 
         [ForeignKey("VirtualInstrumentPresetId")]
-        public virtual VirtualInstrumentPresetModel VirtualInstrumentPreset { get; set; } = new VirtualInstrumentPresetModel();
+        public virtual VirtualInstrumentPresetModel VirtualInstrumentPreset { get; set; } = null!;
 
         [Column("words_id")]
         [Required]
         public int WordId { get; set;}
 
         [ForeignKey("WordId")]
-        public virtual WordModel Word { get; set; } = new WordModel();
+        public virtual WordModel Word { get; set; } = null!;
     }
 }

@@ -122,43 +122,5 @@ namespace SoundAtlas.Views.Theory
                 viewModel.ImportCsv();
             }
         }
-
-        private void OnAddWord_Click(object sender, RoutedEventArgs e)
-        {
-            // senderからButtonを特定し、必要に応じてDataContextを取得
-            Console.WriteLine(sender);
-            var button = sender as Button;
-            if (button != null)
-            {
-                var theory = button.DataContext as TheoryItemViewModel;
-                Console.WriteLine(theory);
-                if (theory != null)
-                {
-                    // ここでダイアログを表示し、ユーザーに語彙を選択させる
-                    // 選択された語彙をデータベースにリンクする処理など
-                    Console.WriteLine(theory.TheoryId);
-                    Console.WriteLine(theory.Name);
-                }
-            }
-        }
-
-        private void WordButton_Click(object sender, RoutedEventArgs e)
-        {
-            // senderからButtonを特定し、必要に応じてDataContextを取得
-            Console.WriteLine(sender);
-            var button = sender as Button;
-            if (button != null)
-            {
-                var theory = button.DataContext as TheoryItemViewModel;
-                Console.WriteLine(theory);
-                if (theory != null)
-                {
-                    // ここでダイアログを表示し、ユーザーに語彙を選択させる
-                    // 選択された語彙をデータベースにリンクする処理など
-                    Console.WriteLine(theory.TheoryId);
-                    Console.WriteLine(theory.Name);
-                }
-            }
-        }
     }
 }

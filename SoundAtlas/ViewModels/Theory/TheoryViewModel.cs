@@ -7,6 +7,7 @@ using System.Windows;
 using Microsoft.Win32;
 using System.Text;
 using System.IO;
+using SoundAtlas.ViewModels.Word;
 
 namespace SoundAtlas.ViewModels.Theory
 {
@@ -17,7 +18,7 @@ namespace SoundAtlas.ViewModels.Theory
         public ObservableCollection<TheoryItemViewModel> Theories { get; private set; }
         private ObservableCollection<TheoryItemViewModel> _allTheories;
 
-        public ObservableCollection<string> AvailableWords { get; set; } = new ObservableCollection<string>();
+        public ObservableCollection<WordViewModel> LinkedWords { get; set; } = new ObservableCollection<WordViewModel>();
 
         public string? SearchText { get; set; }
         public string? SelectedSearchColumn { get; set; }

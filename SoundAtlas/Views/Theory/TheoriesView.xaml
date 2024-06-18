@@ -87,20 +87,6 @@
                 </DataGridTemplateColumn>
                 <DataGridTextColumn Header="Abstract" Binding="{Binding Abstract}" IsReadOnly="True" Width="2*" />
             </DataGrid.Columns>
-            <DataGrid.RowDetailsTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal" Margin="10">
-                        <Button Content="＋" Width="20" Height="20" Click="OnAddWord_Click" Focusable="False"/>
-                        <ItemsControl ItemsSource="{Binding WordsList}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Button Content="{Binding}" Margin="2" Click="WordButton_Click"/>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </StackPanel>
-                </DataTemplate>
-            </DataGrid.RowDetailsTemplate>
         </DataGrid>
     </Grid>
 </UserControl>
