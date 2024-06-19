@@ -4,7 +4,6 @@ using SoundAtlas.Models;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows;
-using System.Text;
 using System.IO;
 
 namespace SoundAtlas.ViewModels.VirtualInstrument.VirtualInstrument.Parameters
@@ -15,7 +14,7 @@ namespace SoundAtlas.ViewModels.VirtualInstrument.VirtualInstrument.Parameters
         private int _currentPresetId;
 
         public ObservableCollection<ParameterItemViewModel> Parameters { get; private set; }
-        public string PresetName { get; private set; }
+        public string PresetName { get; private set; } = "";
 
         public ParameterViewModel(int presetId)
         {
@@ -164,8 +163,8 @@ namespace SoundAtlas.ViewModels.VirtualInstrument.VirtualInstrument.Parameters
 
     public class ParameterItemViewModel : ObservableObject
     {
-        private string _name;
-        private string _value;
+        private string _name = "";
+        private string _value = "";
 
         public string Name
         {

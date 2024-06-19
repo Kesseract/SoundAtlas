@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SoundAtlas.Models;
+using System.IO;
 
 public class MyMusicAppContext : DbContext
 {
@@ -20,6 +21,10 @@ public class MyMusicAppContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlite(@"Data Source=C:\Users\hikar\cs\SoundAtlas\SoundAtlas\Database\MyMusicApp.db");
+        var basePath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\"));
+        var dbPath = Path.Combine(basePath, "Database", "MyMusicApp.db");
+        Console.WriteLine(dbPath);
+        // C:\Users\hikar\cs\SoundAtlas\SoundAtlas\bin\Debug\net8.0-windows\Database\MyMusicApp.db
+        optionsBuilder.UseSqlite($"Data Source={dbPath}");
     }
 }
